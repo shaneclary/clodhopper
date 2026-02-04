@@ -1,4 +1,6 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
+import { executeCwd } from './executors/cwd.js';
+import { executeStatus } from './executors/status.js';
 import { executeShell } from './executors/shell.js';
 import { executeClaude } from './executors/claude.js';
 
@@ -15,6 +17,8 @@ interface ExecutorEntry {
 }
 
 const executors: ExecutorEntry[] = [
+  { name: 'cwd', prefix: 'cwd:', execute: executeCwd },
+  { name: 'status', prefix: 'status:', execute: executeStatus },
   { name: 'shell', prefix: 'shell:', execute: executeShell },
   { name: 'claude', prefix: 'claude:', execute: executeClaude },
 ];

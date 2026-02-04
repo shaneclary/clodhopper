@@ -3,9 +3,10 @@
 import { useState, useEffect, useRef } from 'react';
 import { createClient } from '@supabase/supabase-js';
 
+// Fallbacks for build-time prerender — real values are always present at runtime
 const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co',
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder',
 );
 
 interface Command {
@@ -283,15 +284,36 @@ export default function Home() {
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {commands.length === 0 && (
           <div className="flex items-center justify-center h-full text-center">
-            <div className="space-y-2">
-              <p className="text-zinc-500 text-sm">No commands yet</p>
-              <p className="text-zinc-700 text-xs">
-                Try{' '}
-                <code className="bg-zinc-800 px-1.5 py-0.5 rounded text-zinc-400">
-                  shell: ls -la
-                </code>{' '}
-                or ask Claude anything
+            <div className="space-y-3 px-4">
+              <p className="text-zinc-400 text-sm font-medium">
+                Ready to hop
               </p>
+              <div className="text-zinc-600 text-xs space-y-1.5">
+                <p>
+                  <code className="bg-zinc-800 px-1.5 py-0.5 rounded text-zinc-400">
+                    cwd: ~/projects/myapp
+                  </code>{' '}
+                  set project dir
+                </p>
+                <p>
+                  <code className="bg-zinc-800 px-1.5 py-0.5 rounded text-zinc-400">
+                    what does this project do?
+                  </code>{' '}
+                  ask Claude
+                </p>
+                <p>
+                  <code className="bg-zinc-800 px-1.5 py-0.5 rounded text-zinc-400">
+                    shell: npm test
+                  </code>{' '}
+                  run a command
+                </p>
+                <p>
+                  <code className="bg-zinc-800 px-1.5 py-0.5 rounded text-zinc-400">
+                    status:
+                  </code>{' '}
+                  check daemon state
+                </p>
+              </div>
             </div>
           </div>
         )}

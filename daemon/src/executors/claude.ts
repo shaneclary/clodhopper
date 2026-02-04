@@ -2,6 +2,7 @@ import { spawn } from 'child_process';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { StreamWriter } from '../stream-writer.js';
 import { processManager } from '../process-manager.js';
+import { getCwd } from '../state.js';
 
 const TIMEOUT = 10 * 60 * 1000; // 10 minutes
 
@@ -14,7 +15,7 @@ export function executeClaude(
     console.log(`  🤖 claude: ${prompt.slice(0, 60)}...`);
 
     const proc = spawn('claude', ['--print', prompt], {
-      cwd: process.env.HOME,
+      cwd: getCwd(),
       env: process.env as NodeJS.ProcessEnv,
     });
 

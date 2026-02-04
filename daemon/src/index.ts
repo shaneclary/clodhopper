@@ -2,6 +2,7 @@ import 'dotenv/config';
 import { createClient } from '@supabase/supabase-js';
 import { routeCommand } from './executor.js';
 import { processManager } from './process-manager.js';
+import { getCwd } from './state.js';
 import type { Command } from './types.js';
 
 // --- Config ---
@@ -122,6 +123,7 @@ async function processBacklog() {
 async function main() {
   console.log('🦗 codhopper daemon starting...');
   console.log(`📡 Supabase: ${SUPABASE_URL}`);
+  console.log(`📂 cwd: ${getCwd()}`);
 
   await processBacklog();
 

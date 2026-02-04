@@ -2,6 +2,7 @@ import { spawn } from 'child_process';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { StreamWriter } from '../stream-writer.js';
 import { processManager } from '../process-manager.js';
+import { getCwd } from '../state.js';
 
 const TIMEOUT = 5 * 60 * 1000; // 5 minutes
 
@@ -14,7 +15,7 @@ export function executeShell(
     console.log(`  🐚 shell: ${cmd}`);
 
     const proc = spawn('bash', ['-c', cmd], {
-      cwd: process.env.HOME,
+      cwd: getCwd(),
       env: process.env as NodeJS.ProcessEnv,
     });
 
