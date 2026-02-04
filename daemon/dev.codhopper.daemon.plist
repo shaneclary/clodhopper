@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>dev.codhopper.daemon</string>
+    
+    <key>ProgramArguments</key>
+    <array>
+        <!-- Update this path to your node installation -->
+        <string>/usr/local/bin/node</string>
+        <string>/Users/YOUR_USERNAME/codhopper/daemon/node_modules/.bin/tsx</string>
+        <string>/Users/YOUR_USERNAME/codhopper/daemon/src/index.ts</string>
+    </array>
+    
+    <key>WorkingDirectory</key>
+    <string>/Users/YOUR_USERNAME/codhopper/daemon</string>
+    
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    </dict>
+    
+    <key>RunAtLoad</key>
+    <true/>
+    
+    <key>KeepAlive</key>
+    <true/>
+    
+    <key>StandardOutPath</key>
+    <string>/tmp/codhopper.log</string>
+    
+    <key>StandardErrorPath</key>
+    <string>/tmp/codhopper.error.log</string>
+    
+    <key>ThrottleInterval</key>
+    <integer>10</integer>
+</dict>
+</plist>
+<!--
+Installation:
+1. Replace YOUR_USERNAME with your actual username
+2. Update node path if different (run: which node)
+3. Copy to LaunchAgents:
+   cp dev.codhopper.daemon.plist ~/Library/LaunchAgents/
+4. Load:
+   launchctl load ~/Library/LaunchAgents/dev.codhopper.daemon.plist
+5. Check status:
+   launchctl list | grep codhopper
+6. View logs:
+   tail -f /tmp/codhopper.log
+7. Unload:
+   launchctl unload ~/Library/LaunchAgents/dev.codhopper.daemon.plist
+-->
