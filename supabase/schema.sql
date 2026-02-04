@@ -30,27 +30,26 @@ CREATE INDEX idx_responses_command ON responses(command_id, chunk_index);
 ALTER PUBLICATION supabase_realtime ADD TABLE commands;
 ALTER PUBLICATION supabase_realtime ADD TABLE responses;
 
--- RLS policies (basic - tighten for production)
+-- RLS policies
+-- These are wide-open for simplicity. The anon key is only exposed to your
+-- PIN-protected web app, and the service key stays on the daemon. This is
+-- fine for single-user / personal use. For shared or multi-user deployments,
+-- replace WITH CHECK (true) / USING (true) with proper auth checks.
 ALTER TABLE commands ENABLE ROW LEVEL SECURITY;
 ALTER TABLE responses ENABLE ROW LEVEL SECURITY;
 
--- Allow authenticated users to insert commands
 CREATE POLICY "Anyone can insert commands" ON commands
   FOR INSERT WITH CHECK (true);
 
--- Allow reading all commands (for the web UI)
 CREATE POLICY "Anyone can read commands" ON commands
   FOR SELECT USING (true);
 
--- Allow daemon to update command status (service role bypasses RLS anyway)
-CREATE POLICY "Service can update commands" ON commands
+CREATE POLICY "Anyone can update commands" ON commands
   FOR UPDATE USING (true);
 
--- Allow daemon to insert responses
 CREATE POLICY "Anyone can insert responses" ON responses
   FOR INSERT WITH CHECK (true);
 
--- Allow reading responses
 CREATE POLICY "Anyone can read responses" ON responses
   FOR SELECT USING (true);
 

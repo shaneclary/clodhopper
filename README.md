@@ -71,8 +71,8 @@ npm start
 
 For persistent running:
 ```bash
-# macOS — launch agent
-cp dev.codhopper.daemon.plist ~/Library/LaunchAgents/
+# macOS — launch agent (edit YOUR_USERNAME first)
+cp dev.codhopper.daemon.plist.example ~/Library/LaunchAgents/dev.codhopper.daemon.plist
 launchctl load ~/Library/LaunchAgents/dev.codhopper.daemon.plist
 
 # Or use pm2
