@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { timingSafeEqual } from 'crypto';
 
 export async function POST(request: Request) {
   const { pin } = await request.json();
@@ -9,7 +10,14 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Server misconfigured' }, { status: 500 });
   }
 
-  if (pin === correctPin) {
+  // Timing-safe comparison to prevent timing attacks
+  const pinBuf = Buffer.from(String(pin));
+  const correctBuf = Buffer.from(correctPin);
+
+  if (
+    pinBuf.length === correctBuf.length &&
+    timingSafeEqual(pinBuf, correctBuf)
+  ) {
     return NextResponse.json({ success: true });
   }
 
